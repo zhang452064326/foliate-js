@@ -880,8 +880,9 @@ class Loader {
             .replace(/font-size\s*:\s*xx-large/gi, 'font-size: 2rem')
             .replace(/font-size\s*:\s*xxx-large/gi, 'font-size: 3rem')
             // replace hardcoded colors
-            .replace(/color\s*:\s*#000000/gi, 'color: unset')
-            .replace(/color\s*:\s*#000/gi, 'color: unset')
+            .replace(/\scolor\s*:\s*#000000/gi, 'color: var(--theme-fg-color)')
+            .replace(/\scolor\s*:\s*#000/gi, 'color: var(--theme-fg-color)')
+            .replace(/\scolor\s*:\s*rgb\(0,\s*0,\s*0\)/gi, 'color: var(--theme-fg-color)')
     }
     // find & replace all possible relative paths for all assets without parsing
     replaceString(str, href, parents = []) {
