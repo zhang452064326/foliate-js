@@ -320,7 +320,7 @@ const parseNav = (doc, resolve = f => f) => {
         const href = resolveHref($a?.getAttribute('href'))
         const label = getElementText($a) || $a?.getAttribute('title')
         // TODO: get and concat alt/title texts in content
-        const result = { label, href, subitems: parseOL($ol) }
+        const result = { label, href, subitems: parseOL($ol), originHref: $a?.getAttribute('href') }
         if (getType) result.type = $a?.getAttributeNS(NS.EPUB, 'type')?.split(/\s/)
         return result
     }
@@ -352,9 +352,9 @@ const parseNCX = (doc, resolve = f => f) => {
         const href = resolveHref($content.getAttribute('src'))
         if (el.localName === 'navPoint') {
             const els = $$(el, 'navPoint')
-            return { label, href, subitems: els.length ? els.map(parseItem) : null }
+            return { label, href, subitems: els.length ? els.map(parseItem) : null, originHref: $content?.getAttribute('src') }
         }
-        return { label, href }
+        return { label, href, originHref: $content?.getAttribute('src') }
     }
     const parseList = (el, itemName) => $$(el, itemName).map(parseItem)
     const getSingle = (container, itemName) => {
